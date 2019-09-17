@@ -1,8 +1,31 @@
 import React from "react"
-import { Redirect } from "react-router-dom"
+import { Redirect, withRouter } from "react-router-dom"
 import "../css/login.css"
+import check from "../file/login"
 
 class Login extends React.Component {
+	state = {
+		username: "",
+		password: ""
+	}
+
+	onSubmit = e => {
+		e.preventDefault()
+		let found = false
+		check.forEach(item => {
+			console.log(item)
+			if (
+				item.username === this.state.username &&
+				item.password === this.state.password
+			) {
+				found = true
+			}
+		})
+		if (found === true) {
+			this.props.login()
+		}
+	}
+
 	render() {
 		if (this.props.isLogin) {
 			return <Redirect to='/' />
@@ -10,7 +33,9 @@ class Login extends React.Component {
 			return (
 				<div>
 					<div id='login'>
-						<h3 class='text-center text-white pt-5'>Login form</h3>
+						<h3 class='text-center text-white pt-5'>
+							Welcome to WBcafe`
+						</h3>
 						<div class='container'>
 							<div
 								id='login-row'
@@ -21,8 +46,7 @@ class Login extends React.Component {
 										<form
 											id='login-form'
 											class='form'
-											action=''
-											method='post'
+											onSubmit={this.onSubmit}
 										>
 											<h3 class='text-center text-info'>
 												Login
@@ -40,6 +64,13 @@ class Login extends React.Component {
 													name='username'
 													id='username'
 													class='form-control'
+													value={this.state.username}
+													onChange={({ target }) => {
+														this.setState({
+															[target.name]:
+																target.value
+														})
+													}}
 												/>
 											</div>
 											<div class='form-group'>
@@ -55,37 +86,23 @@ class Login extends React.Component {
 													name='password'
 													id='password'
 													class='form-control'
+													value={this.state.password}
+													onChange={({ target }) => {
+														this.setState({
+															[target.name]:
+																target.value
+														})
+													}}
 												/>
 											</div>
 											<div class='form-group'>
-												<label
-													for='remember-me'
-													class='text-info'
-												>
-													<span>Remember me</span> 
-													<span>
-														<input
-															id='remember-me'
-															name='remember-me'
-															type='checkbox'
-														/>
-													</span>
-												</label>
-												<br />
-												<input
+												<button
 													type='submit'
 													name='submit'
 													class='btn btn-info btn-md'
-													value='submit'
-												/>
-											</div>
-											<div
-												id='register-link'
-												class='text-right'
-											>
-												<a href='#' class='text-info'>
-													Register here
-												</a>
+												>
+													login
+												</button>
 											</div>
 										</form>
 									</div>
@@ -99,4 +116,4 @@ class Login extends React.Component {
 	}
 }
 
-export default Login
+export default withRouter(Login)
