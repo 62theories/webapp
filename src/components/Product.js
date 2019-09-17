@@ -6,7 +6,7 @@ class Product extends React.Component {
 			<div className='container-fluid'>
 				<div class='card'>
 					<div class='card-body'>
-						<h4 class='card-title'>Basic Table</h4>
+						<h4 class='card-title'>Basic Table2</h4>
 						<h6 class='card-subtitle'>
 							Add class <code>.table</code>
 						</h6>
