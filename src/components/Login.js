@@ -1,7 +1,6 @@
 import React from "react"
 import { Redirect, withRouter } from "react-router-dom"
 import "../css/login.css"
-import check from "../file/login"
 
 class Login extends React.Component {
 	state = {
@@ -12,13 +11,19 @@ class Login extends React.Component {
 	onSubmit = e => {
 		e.preventDefault()
 		let found = false
-		check.forEach(item => {
+		this.props.check.forEach(item => {
 			console.log(item)
 			if (
 				item.username === this.state.username &&
 				item.password === this.state.password
 			) {
 				found = true
+				this.props.changeUValue({
+					id: item.id,
+					name: item.name,
+					surname: item.surname,
+					tel: item.tel
+				})
 			}
 		})
 		if (found === true) {
@@ -48,14 +53,9 @@ class Login extends React.Component {
 											class='form'
 											onSubmit={this.onSubmit}
 										>
-											<h3 class='text-center text-info'>
-												Login
-											</h3>
+											<h3 class='text-center'>Login</h3>
 											<div class='form-group'>
-												<label
-													for='username'
-													class='text-info'
-												>
+												<label for='username'>
 													Username:
 												</label>
 												<br />
@@ -71,18 +71,16 @@ class Login extends React.Component {
 																target.value
 														})
 													}}
+													required
 												/>
 											</div>
 											<div class='form-group'>
-												<label
-													for='password'
-													class='text-info'
-												>
+												<label for='password'>
 													Password:
 												</label>
 												<br />
 												<input
-													type='text'
+													type='password'
 													name='password'
 													id='password'
 													class='form-control'
@@ -93,13 +91,14 @@ class Login extends React.Component {
 																target.value
 														})
 													}}
+													required
 												/>
 											</div>
 											<div class='form-group'>
 												<button
 													type='submit'
 													name='submit'
-													class='btn btn-info btn-md'
+													class='btn btn-secondary btn-md'
 												>
 													login
 												</button>
